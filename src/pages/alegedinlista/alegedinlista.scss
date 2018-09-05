@@ -1,0 +1,21 @@
+page-alegedinlista {
+    .toolbar  ion-icon{
+        font-size: 25px;
+        color:#008DC1;
+    }
+    .list > .item-block:first-child{
+        border-top:0 !important;
+      }
+      .list > .item-block:last-child, .list > .item-wrapper:last-child .item-block{
+        border-bottom:0  !important;
+      }
+      .list .item-block .item-inner {
+        border-bottom: 0;
+    }
+    .item.item .checkbox {
+        margin: 9px 17px 9px 4px;
+    }
+    .card-content{
+        color:grey;
+    }
+}

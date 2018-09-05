@@ -1,0 +1,46 @@
+<!--
+  Generated template for the PhotographyModalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar>
+    <ion-title>Alege Actiunea</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-card>
+      
+        <ion-card-content *ngIf="filesPicked.length == 0">
+            <h3>Poti alege atasamente din telefonul tau, sau poti face fotografii pentru a le trimite odata cu
+                sesizarea ta.</h3>
+            <h3>Daca esti multumit de alegerile facute, apasa butonul `Alege si salveaza` !</h3>
+        </ion-card-content>
+        <ion-card-content *ngIf="filesPicked.length > 0">
+            <ion-item *ngFor="let img of displayImg;let i = index">
+                <ion-icon name="close" (click)="removeFile(i)"></ion-icon>
+                <img [src]="_DomSanitizationService.bypassSecurityTrustUrl(img)">
+              </ion-item>
+           <!-- <img *ngFor="let img of displayImg" [src]="_DomSanitizationService.bypassSecurityTrustUrl(img)"> -->
+          <!-- <p *ngFor="let img of filesPicked">{{img}}</p> -->
+        </ion-card-content>
+      </ion-card>
+      <button ion-button icon-end round outline class="photoupload" (click)="TakePicture()">
+          Fotografiaza
+           <ion-icon name="camera"></ion-icon>
+         </button>
+         <button ion-button icon-end round full class="multipleupload" (click)="MultipleImageSelection()">
+            Alegeți din galerie
+             <ion-icon name="phone-portrait"></ion-icon>
+           </button>
+           <button ion-button icon-end round full class="inapoi" (click)="dismiss()">
+              Inapoi
+               <ion-icon name="exit"></ion-icon>
+             </button>
+        
+</ion-content>

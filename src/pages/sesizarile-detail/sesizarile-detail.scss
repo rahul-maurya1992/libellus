@@ -1,0 +1,21 @@
+page-sesizarile-detail {
+    .card-content .procesare{
+        text-align: right;
+        font-size: 15px;
+        color:grey;
+    }
+    .card-content .address{
+        color:#008DC1;
+    }
+    .toolbar  ion-icon{
+        font-size: 25px;
+        color:#008DC1;
+    }
+    .list .item-block .item-inner {
+        border-bottom: 1px solid #dedede !important;
+    }
+    .card-content .label .icon{
+        float: right;
+        color:#008DC1;
+    }
+}

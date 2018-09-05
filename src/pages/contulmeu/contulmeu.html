@@ -1,0 +1,57 @@
+<!--
+  Generated template for the ContulmeuPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>Setari profil</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <div class="profile-image">
+        <img id="profileImage" [src]="currentUser?.gravatarUrl" width="20%" height="auto">
+        <h4 id="setariProfil-heading1" style="color:#000000;font-weight:lighter;text-align:center;">{{currentUser?.name}} {{currentUser?.last_name}}</h4>
+    </div>
+    <form [formGroup]="accountForm" (submit)="submit(accountForm)">
+    <ion-list>
+        <ion-item>
+            <ion-label stacked>E-mail</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+          <ion-icon *ngIf="!isValid('email')" class="errorIcon" name="warning"></ion-icon>
+        <ion-item>
+          <ion-label stacked>Nume</ion-label>
+          <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
+        <ion-icon *ngIf="!isValid('name')" class="errorIcon" name="warning"></ion-icon>
+        <ion-item>
+          <ion-label stacked>Prenume</ion-label>
+          <ion-input type="text" formControlName="last_name"></ion-input>
+        </ion-item>
+        <ion-icon *ngIf="!isValid('last_name')" class="errorIcon" name="warning"></ion-icon>
+        <ion-item>
+            <ion-label stacked>Telefon</ion-label>
+            <ion-input type="number" formControlName="phone_number"></ion-input>
+          </ion-item>
+          <ion-icon *ngIf="!isValid('phone_number')" class="errorIcon" name="warning"></ion-icon>
+          <ion-item class="toggleActive">
+              <ion-label>Notificari Active</ion-label>
+              <ion-toggle checked="false" (ionChange)="toggleChange($event)" formControlName="notifications_status"></ion-toggle>
+            </ion-item>
+      </ion-list>
+      
+      <button type="submit" ion-button icon-end round outline>
+         Salveaza
+           <ion-icon name="paper-plane"></ion-icon>
+         </button>
+         </form>
+</ion-content>

@@ -1,0 +1,52 @@
+<!--
+  Generated template for the CategorymodalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar>
+    <ion-title>Cauta categorii</ion-title>
+  </ion-navbar>
+  <ion-searchbar [(ngModel)]="searchText"
+  [showCancelButton]="shouldShowCancel"
+  (ionInput)="onInput($event)"
+  (ionCancel)="onCancel($event)">
+</ion-searchbar>
+</ion-header>
+
+
+
+<ion-content>
+  <form [formGroup]="categoryForm">
+      <ion-card>
+  <ion-list>
+      <!-- <ion-item *ngFor="let cat of categorylist | search:searchText" style="border-bottom:0.55px solid #c8c7cc;">
+          <ion-label>{{cat.name}}</ion-label>
+          <ion-checkbox value="cat.name"></ion-checkbox>
+        </ion-item> -->
+        
+    <ion-item *ngFor="let cat of categorylist| search: searchText : 'name' ;let i = index;" formArrayName="category" style="border-bottom:0.55px solid #c8c7cc;">
+      <ion-label>{{cat.name}}</ion-label>
+      <ion-checkbox value="cat.name"  [formControlName]="i"></ion-checkbox>
+    </ion-item>
+
+  </ion-list>
+      </ion-card>
+</form>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <button type="button" ion-button (click)="cancel()">
+      Renunta
+     </button>
+     <button type="button" ion-button (click)="dismiss(categoryForm)">
+      OK
+     </button>
+     <button type="button" ion-button (click)="reset(categoryForm)">
+        Reseteaza
+       </button>
+  </ion-toolbar>
+</ion-footer>
+

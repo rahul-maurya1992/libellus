@@ -1,17 +1,71 @@
-<ion-menu [content]="content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-menu [content]="content" side="left" id="menu1">
+    <ion-header no-border>
+        <ion-toolbar color="primary" class="menutool">
+            <img src="assets/imgs/logo_Libellus.svg" style="height:33px;">
+        </ion-toolbar>
+    </ion-header>
 
-  <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
-    </ion-list>
-  </ion-content>
+    <ion-content color="primary">
+        <ion-item no-lines style="background:none;color:#fff;">
+            <b>Trimite o sesizare !</b>
+        </ion-item>
+        <ion-list class="menulist" no-lines *ngIf="eventsubscriber == true">
+            <button menuClose ion-item *ngFor="let p of pages" [class.activeHighlight]="checkActive(p)" (click)="openPage(p)">
+                <ion-icon name="{{p.icon}}"></ion-icon>{{p.title}}
+            </button>
+        </ion-list>
+        <ion-list class="menulist" no-lines *ngIf="eventsubscriber == false">
+            <!-- <button menuClose ion-item (click)="authenticate()">
+                    <ion-icon><img src="assets/icon/key.png" width="24"></ion-icon>Autentificare
+                </button> -->
+            <button menuClose ion-item *ngFor="let p of pages" [class.activeHighlight]="checkActive(p)" (click)="openPage(p)">
+                <ion-icon *ngIf="p.img != null"><img src="assets/icon/key.png" width="24"></ion-icon>
+                <ion-icon *ngIf="p.img == null" name="{{p.icon}}"></ion-icon>{{p.title}}
+            </button>
+        </ion-list>
+        <ion-item no-lines style="background:none;">
+            <div style="float:right;color:#fff;">
+                <small>Powered by USR Galati</small>
+                <img style="height: 40px;" src="assets/imgs/USR_logo_mono.png" />
+            </div>
+        </ion-item>
+    </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<!-- <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav> -->
+
+
+<!-- *************** Second menu for search ***************-->
+<ion-menu [content]="content" side="right" id="menu2">
+    <ion-header no-border>
+        <ion-toolbar class="menutool" style="color: #008DC1;font-size: 20px;font-weight: 600;">
+            <span>Filtre sesizari</span>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content style="background:#fff !important;">
+        <ion-item>
+            <ion-label>Selecteaza Status Filtrare</ion-label>
+            <ion-select [(ngModel)]="filterObject.status" name="status">
+                <!-- <ion-option value="" disabled selected hidden>Selecteaza Status Filtrare</ion-option> -->
+                <ion-option value="all">Toate</ion-option>
+                <ion-option value="0">Procesare</ion-option>
+                <ion-option value="1">Acceptat</ion-option>
+                <ion-option value="4">Refuzat</ion-option>
+            </ion-select>
+        </ion-item>
+        <div class="outer_div">
+                <button ion-button menuClose="right" round outline (click)="applyFilters(filterObject)">
+                        Aplica Filtre
+                    </button>
+                    <button ion-button menuClose="right" round outline (click)="ResetFilter()">
+                        Reseteaza Filtre
+                    </button>
+        </div>
+       
+    </ion-content>
 
 </ion-menu>
 

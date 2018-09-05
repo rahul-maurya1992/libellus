@@ -1,0 +1,84 @@
+<!--
+  Generated template for the SesizarilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>sesizarile Mele</ion-title>
+    <ion-buttons end> 
+            <button ion-button icon-only (click)="add()"><ion-icon name="add"></ion-icon></button>
+            <button ion-button icon-only menuToggle="right"><ion-icon name="search"></ion-icon></button>
+          </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+
+  <ion-card (click)="detail()" *ngFor="let sesi of sesizarile">
+      <ion-card-header>
+         <span *ngFor="let str of sesi.structures">{{str.name}}, </span> <span>{{ sesi.town.name }}, {{sesi.createdAt | date:'medium'}}</span>
+        </ion-card-header>
+    <ion-card-content>
+        <img *ngIf="sesi.attachments.length>0" src="{{sesi.attachments[0].image_url}}"/>
+      <p *ngIf='sesi.status == "0"'>Procesare</p>
+      <p *ngIf='sesi.status == "1"'>Acceptat</p>
+      <p *ngIf='sesi.status == "4"'>Refuzat</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-card>
+    <ion-card-header>
+       Salubritate, Drumuri/lluminat, <span>GALATI, 23 Aug 2018</span>
+      </ion-card-header>
+  <ion-card-content>
+      <img src="assets/imgs/img1.jpeg"/>
+    <p>
+      Procesare
+    </p>
+  </ion-card-content>
+</ion-card>
+<ion-card>
+  <ion-card-header>
+     Salubritate, Drumuri/lluminat, <span>GALATI, 23 Aug 2018</span>
+    </ion-card-header>
+<ion-card-content>
+    <img src="assets/imgs/img3.jpeg"/>
+  <p>
+    Procesare
+  </p>
+</ion-card-content>
+</ion-card>
+<ion-card>
+  <ion-card-header>
+     Salubritate, Drumuri/lluminat, <span>GALATI, 23 Aug 2018</span>
+    </ion-card-header>
+<ion-card-content>
+    <img src="assets/imgs/img4.jpeg"/>
+  <p>
+    Procesare
+  </p>
+</ion-card-content>
+</ion-card> -->
+<ion-infinite-scroll *ngIf="currentPage <= lastPage && currentPage < totalPage" (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll-content
+    loadingSpinner="bubbles"
+    loadingText="Loading more data...">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>
+</ion-content>

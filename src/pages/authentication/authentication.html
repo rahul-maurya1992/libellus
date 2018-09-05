@@ -1,0 +1,52 @@
+<!--
+  Generated template for the AuthenticationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>authentication</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="loginForm" (submit)="authenticate(loginForm)">
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>E-mail</ion-label>
+        <ion-input type="email" placeholder="Adresa ta de e-mail" autocapitalize="off" autocorrect="off" formControlName="email"></ion-input>
+
+      </ion-item>
+      <ion-icon *ngIf="!isValid('email')" class="errorIcon" name="warning"></ion-icon>
+      <ion-item>
+        <ion-label stacked>Parola</ion-label>
+        <ion-input type="password" placeholder="******" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-icon *ngIf="!isValid('password')" class="errorIcon" name="warning"></ion-icon>
+
+    </ion-list>
+    <button type="submit" ion-button icon-end round outline [disabled]="!loginForm.valid">
+      Autentifica-te
+      <ion-icon name="unlock"></ion-icon>
+    </button>
+  </form>
+  <button ion-button icon-end round outline (click)="creeaza()">
+    Creaza Cont
+    <ion-icon name="person-add"></ion-icon>
+  </button>
+  <button ion-button icon-end round outline (click)="forgot()">
+    Am uiat parola
+    <ion-icon name="help-buoy"></ion-icon>
+  </button>
+  <button ion-button icon-end round outline (click)="resetbycode()">
+    Reseteaza parola folosind cod
+    <ion-icon name="sync"></ion-icon>
+  </button>
+</ion-content>

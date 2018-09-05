@@ -1,0 +1,54 @@
+<!--
+  Generated template for the ResetpassbycodePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+  <ion-navbar>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>Resetare Parola</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+    <ion-card-content style="font-size:15px;">
+      Va rugam introduceti in campul de mai jos codul secret primit prin e-mail <i><b>(puteti folosi
+        functia copy/paste a telefonului dumneavoastra)</b></i> si noua parola pe care o
+        doriti.
+    </ion-card-content>
+  </ion-card>
+  <form [formGroup]="resetbycodeForm" (submit)="recoverypassbycode(resetbycodeForm)">
+  <ion-list padding>
+      <ion-item>
+          <ion-label stacked>Cod secret</ion-label>
+          <ion-textarea name="description" placeholder="ex : 4f7c45850359127271e9846df9d7879674951e5dac27a12387c7865394d6d83d" formControlName="token"></ion-textarea>
+        </ion-item>
+        <ion-icon *ngIf="!isValid('token')" class="errorIcon" name="warning"></ion-icon>
+        <ion-item>
+            <ion-label stacked>Parola noua</ion-label>
+            <ion-input type="password" placeholder="********" autocapitalize="off" autocorrect="off" formControlName="password"></ion-input>
+          </ion-item>
+          <ion-icon *ngIf="!isValid('password')" class="errorIcon" name="warning"></ion-icon>
+    <ion-item>
+      <ion-label stacked>Confirmare parola</ion-label>
+      <ion-input type="password" placeholder="********" autocapitalize="off" autocorrect="off" formControlName="password_confirmation"></ion-input>
+    </ion-item>
+    <div class='form-text error' color="danger" *ngIf="resetbycodeForm.controls.password_confirmation.touched">
+        <div *ngIf="resetbycodeForm.hasError('mismatchedPasswords')">Passwords do not match.</div>
+      </div>
+      <button ion-button icon-end round outline type="submit">
+        Recupereaza
+         <ion-icon name="paper-plane"></ion-icon>
+       </button>
+  
+   
+    </ion-list>
+    </form>
+
+</ion-content>

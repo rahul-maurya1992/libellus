@@ -14,3 +14,82 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+ion-menu{
+    ion-content{
+     background-color:#008DC1 !important;
+    }
+    .menulist .item{
+        background-color:#008DC1 !important;
+        color:#ffffff;
+        border:none !important;
+       }
+       .menutool .toolbar-content {
+           padding:8px !important;
+    }
+    .menulist .item .icon{
+        // transform: rotate(45deg);
+        padding-right: 10px;
+    }
+    .menulist .item .item-inner{
+        background-image:none !important; 
+    }
+    .toolbar-background {
+        border: none !important;
+    }
+    .menulist .activeHighlight{
+        background-color:#00AAE7 !important;
+    }
+//////////////////////////////////////////////////////
+
+//  .menulist:first-child .icon{ transform:rotate(-92deg);}
+ .list > .item-block:first-child .icon{
+    //transform:rotate(-92deg)!important; padding-right:0; padding-bottom:10px;
+  }
+  .item-block:first-child{
+    border-top:0 !important;
+  }
+
+/////////////////////////////////////////////////////
+   }
+   .header .title{
+    text-transform: capitalize;
+  }
+  .toolbar-title-wp{
+    text-transform: capitalize;
+  }
+  .bar-buttons-wp{
+    color:#00A8E9;
+  }
+
+
+.horizontalCenter{
+  display: block;margin-left: auto;margin-right: auto; width: 60%;
+}
+.horizontalCenterInner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+button.disable-hover.button.button.button-outline.button-outline.button-round.button-round{
+  width:100% !important;
+  padding:0px 10px !important;
+}
+.button-inner {
+  display: unset !important;
+  font-size: 14px;
+    font-weight: 600;
+}
+
+[icon-right] ion-icon, [icon-end] ion-icon{
+  text-align: right !important;
+  float: right !important;
+}
+.bar-button[icon-only] ion-icon{
+font-size: 2em !important;
+}
+.errorIcon{
+  float: right;
+  position: relative;
+  top: -24px;
+  color: red;
+}

@@ -1,0 +1,31 @@
+page-resetpassbycode {
+    .list > .item-block:first-child{
+        border-top:0 !important;
+      }
+      .list > .item-block:last-child, .list > .item-wrapper:last-child .item-block{
+        border-bottom:0  !important;
+      }
+      .list .item-block .item-inner {
+        border-bottom: 0.55px solid #00A8E9;
+    }
+    .list > .item-block:last-child .item-inner, .list > .item-wrapper:last-child .item-block .item-inner{
+      border-bottom: 0.55px solid #00A8E9 !important;
+    }
+    .text-input-wp{
+      border:none !important;
+    }
+      .content button{
+        width: 100%;
+        text-transform: capitalize;
+      }
+      .label{
+      color:#000 !important;
+      }
+      .list .label{
+        font-size: 15px !important;
+        // font-weight: 600 !important;
+      }
+      textarea{
+        height: 120px;
+      }
+}
