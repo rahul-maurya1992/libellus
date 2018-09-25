@@ -23,7 +23,7 @@
         </ion-card-content>
         <ion-card-content *ngIf="filesPicked.length > 0">
             <ion-item *ngFor="let img of displayImg;let i = index">
-                <ion-icon name="close" (click)="removeFile(i)"></ion-icon>
+                <ion-icon name="close" (click)="removeFile(i)" style="float:right !important;"></ion-icon>
                 <img [src]="_DomSanitizationService.bypassSecurityTrustUrl(img)">
               </ion-item>
            <!-- <img *ngFor="let img of displayImg" [src]="_DomSanitizationService.bypassSecurityTrustUrl(img)"> -->

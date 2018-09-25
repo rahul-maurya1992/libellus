@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { FormControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ItemsProvider } from '../../providers/items/items';
+import { SesizarePage } from '../sesizare/sesizare';
 
 /**
  * Generated class for the ContulmeuPage page.
@@ -20,20 +21,20 @@ export class ContulmeuPage {
   currentUser: any;
   accountForm: FormGroup;
   isToggled: any = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder,public itemPro:ItemsProvider,public toastCtrl:ToastController ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public itemPro: ItemsProvider, public toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContulmeuPage');
     //console.log(localStorage.getItem('currentUser'));
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    //console.log(this.currentUser);
+    console.log(this.currentUser);
     this.accountForm.patchValue({
-      email:this.currentUser.auth.email,
-      name:this.currentUser.name,
-      last_name:this.currentUser.last_name,
-      phone_number:this.currentUser.phone_number,
-      notifications_status:this.currentUser.notification_active
+      email: this.currentUser.email,
+      name: this.currentUser.name,
+      last_name: this.currentUser.last_name,
+      phone_number: this.currentUser.phone_number,
+      notifications_status: this.currentUser.notification_active
 
     })
   }
@@ -45,7 +46,7 @@ export class ContulmeuPage {
       name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
       phone_number: ['', [Validators.required]],
-      notifications_status:['']
+      notifications_status: [false]
     });
   }
 
@@ -63,27 +64,42 @@ export class ContulmeuPage {
   toggleChange(event) {
     console.log('toogle change');
     console.log(event.value);
-    this.itemPro.ToggleNotification().map(res=>res.json()).subscribe(response=>{
+    this.itemPro.ToggleNotification().map(res => res.json()).subscribe(response => {
       console.log(response);
-    },error=>{
+      var localvalue = JSON.parse(localStorage.getItem('currentUser'));
+      localvalue.notification_active = response.notification_active;
+      localStorage.setItem('currentUser', JSON.stringify(localvalue));
+    }, error => {
       console.info(error);
-      this.itemPro.presentToast('Setarile de notificari nu au putut fi modificate',4500,'bottom');
+      this.itemPro.presentToast('Setarile de notificari nu au putut fi modificate', 4500, 'bottom');
     })
   }
 
-  submit(formdata){
+  submit(formdata) {
     console.log(formdata.value);
     var postdata = {
-      id:this.currentUser.id,
-      auth:{email:formdata.value.email},
-      name:formdata.value.name,
-      last_name:formdata.value.last_name,
-      phone_number:formdata.value.phone_number,
-      notifications_status:formdata.value.notifications_status,
-      password:"europa77"
+      "name": formdata.value.name,
+      "last_name": formdata.value.last_name,
+      "email": formdata.value.email,
+      "notifications_status": formdata.value.notifications_status,
+      "phone_number": formdata.value.phone_number
     }
-    this.itemPro.updateUserProfile(postdata).subscribe(response=>{
-      console.log(response);
+    console.log(postdata);
+    this.itemPro.updateUserProfile(postdata).map(res=>res.json()).subscribe(response => {
+      console.log(response[0]);
+      var localvalue = JSON.parse(localStorage.getItem('currentUser'));
+      localvalue.name = response[0].name;
+      localvalue.last_name = response[0].last_name;
+      localvalue.phone_number = response[0].phone_number;
+
+      // let user = {
+      //   name:response[0].name,
+      //   last_name:response[0].last_name,
+      //   email:response[0].email,
+      //   phone_number:response[0].phone_number
+      // }
+      localStorage.setItem('currentUser', JSON.stringify(localvalue));
+      this.navCtrl.setRoot(SesizarePage);
     })
   }
 }

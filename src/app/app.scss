@@ -41,16 +41,26 @@ ion-menu{
     }
 //////////////////////////////////////////////////////
 
-//  .menulist:first-child .icon{ transform:rotate(-92deg);}
- .list > .item-block:first-child .icon{
-    //transform:rotate(-92deg)!important; padding-right:0; padding-bottom:10px;
-  }
   .item-block:first-child{
     border-top:0 !important;
   }
 
 /////////////////////////////////////////////////////
+.outer_div{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px 0;
+}
+.outer_div button.disable-hover.button.button.button-outline.button-outline.button-round.button-round{
+  margin: 0 auto !important;
+    margin-bottom: 10px !important;
+    width: 70% !important;
+}
+
    }
+   /************** end of app css**************/
+   /***************** start global css ***********/
    .header .title{
     text-transform: capitalize;
   }
@@ -77,7 +87,10 @@ button.disable-hover.button.button.button-outline.button-outline.button-round.bu
 .button-inner {
   display: unset !important;
   font-size: 14px;
-    font-weight: 600;
+  font-weight: 600;
+}
+.alert-wrapper .alert-radio-group .alert-radio .button-inner{
+  display:inline-flex !important;
 }
 
 [icon-right] ion-icon, [icon-end] ion-icon{

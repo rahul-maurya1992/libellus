@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { NoutatiPage } from '../noutati/noutati';
 import { TrimiteSesizarePage } from '../trimite-sesizare/trimite-sesizare';
 import { AuthenticateProvider } from '../../providers/authenticate/authenticate';
-import { CookieService } from 'ngx-cookie-service';
 import { PetitiiPublicePage } from '../petitii-publice/petitii-publice';
 
 
@@ -21,7 +20,7 @@ import { PetitiiPublicePage } from '../petitii-publice/petitii-publice';
 })
 export class SesizarePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public authenticatePro: AuthenticateProvider,public cookie:CookieService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public authenticatePro: AuthenticateProvider) {
 
   }
 

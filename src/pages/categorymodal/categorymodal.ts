@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ItemsProvider } from '../../providers/items/items';
 
 /**
  * Generated class for the CategorymodalPage page.
@@ -19,11 +20,12 @@ export class CategorymodalPage {
   selecteddata: any = [];
   categoryForm: FormGroup;
   searchText:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public formBuilder: FormBuilder, ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public formBuilder: FormBuilder,public itemPro: ItemsProvider ) {
     /****** Array for list the categories ***************/
     this.categorylist = [{ id: 1, name: 'Categorii' }, { id: 2, name: 'Transport public' }, { id: 3, name: 'Salubritate' }, { id: 4, name: 'Impozite si taxe' }, { id: 5, name: 'Domeniul public' },
     { id: 6, name: 'Drumuri / Iluminat' }, { id: 7, name: 'Retele de apa calda' }, { id: 8, name: 'Ordine si domeniul public' }, { id: 9, name: 'Retele de apa si canalizare' }, { id: 10, name: 'Spatii verzi' },
     { id: 11, name: 'Biciclisti' }, { id: 12, name: 'Parcari' }, { id: 13, name: 'Cultura' }]
+    //this.Getcategorylist();
   }
 
   ionViewDidLoad() {
@@ -40,7 +42,7 @@ export class CategorymodalPage {
     console.log('ngOnInit');
 
     this.categoryForm = this.formBuilder.group({
-      category: this.formBuilder.array(this.categorylist.map(x => !1))
+      category: this.formBuilder.array(this.categorylist.map(x => {console.log(x)}))
     });
   }
   onInput(evt) {
@@ -80,5 +82,11 @@ export class CategorymodalPage {
     this.selecteddata = [];
     localStorage.removeItem('categorylist');
     this.viewCtrl.dismiss({ selected: this.selecteddata });
+  }
+  Getcategorylist(){
+    this.itemPro.getCategory().map(res=>res.json()).subscribe(response=>{
+      console.log(response);
+      this.categorylist = response.data;
+    })
   }
 }

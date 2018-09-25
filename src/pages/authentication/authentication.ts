@@ -28,7 +28,8 @@ export class AuthenticationPage {
     public formBuilder: FormBuilder,
     public toastCtrl: ToastController
   ) {
-    localStorage.clear();
+    localStorage.removeItem('currentUser');
+    this.event.publish('skip', 'skip');
   }
 
   ionViewDidLoad() {
@@ -69,14 +70,24 @@ export class AuthenticationPage {
     this.authenticatePro.login(formdata.value.email, formdata.value.password).then((response) => {
       console.log(response);
       if (response.active) {
+        let user = {
+          id:response.id,
+          email:response.auth.email,
+          name:response.name,
+          last_name:response.last_name,
+          phone_number:response.phone_number,
+          notification_active:response.notification_active
+        }
         console.log('login success');
-        localStorage.setItem('currentUser', JSON.stringify(response));
+        localStorage.setItem('currentUser', JSON.stringify(user));
         this.event.publish('loggedin', 'loggedin');
         this.navCtrl.setRoot(SesizarePage);
       } else {
         console.log(response.error);
         this.authenticatePro.presentToast('Asigurati-va ca informatiile de logare sunt corecte !', 2500, 'bottom');
-        
+        // localStorage.setItem('currentUser', JSON.stringify(response));
+        // this.event.publish('loggedin', 'loggedin');
+        // this.navCtrl.setRoot(SesizarePage);
       }
     },error=>{
       this.authenticatePro.presentToast('Asigurati-va ca informatiile de logare sunt corecte !', 2500, 'bottom');

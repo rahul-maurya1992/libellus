@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { SesizarileDetailPage } from '../sesizarile-detail/sesizarile-detail';
 import { FilterSesizariPage } from '../filter-sesizari/filter-sesizari';
 import { TrimiteSesizarePage } from '../trimite-sesizare/trimite-sesizare';
@@ -17,12 +17,13 @@ import { ItemsProvider } from '../../providers/items/items';
   selector: 'page-sesizarile',
   templateUrl: 'sesizarile.html',
 })
+
 export class SesizarilePage {
   sesizarile: any = [];
   currentPage: any = 1;
   totalPage: any;
   lastPage:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public itemPro: ItemsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public itemPro: ItemsProvider,public menuCtrl: MenuController,) {
     console.log(this.navParams.get('statusObj'));
     this.FilterFunc();
   }
@@ -42,7 +43,7 @@ export class SesizarilePage {
         this.sesizarile.push(value);
       });
       this.totalPage = res.last_page
-    })
+    },error=>{console.error(error)})
   }
 
   Loadmoredata(pageno) {
@@ -57,8 +58,8 @@ export class SesizarilePage {
     })
   }
 
-  detail() {
-    this.navCtrl.setRoot(SesizarileDetailPage);
+  detail(sesi) {
+    this.navCtrl.setRoot(SesizarileDetailPage,{data:sesi});
   }
 
   search() {
@@ -111,5 +112,11 @@ export class SesizarilePage {
       console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 500);
+  }
+  tooglemenu(){
+    console.log('toogle');
+    this.menuCtrl.enable(false, 'menu3');
+    this.menuCtrl.enable(true, 'menu2');
+    this.menuCtrl.toggle('right');
   }
 }

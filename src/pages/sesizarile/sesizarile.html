@@ -12,8 +12,8 @@
         </button>
     <ion-title>sesizarile Mele</ion-title>
     <ion-buttons end> 
-            <button ion-button icon-only (click)="add()"><ion-icon name="add"></ion-icon></button>
-            <button ion-button icon-only menuToggle="right"><ion-icon name="search"></ion-icon></button>
+            <button (click)="add()" style="background: none;"><ion-icon name="add"></ion-icon></button>
+            <button (click)="tooglemenu()" style="background: none;"><ion-icon name="search"></ion-icon></button>
           </ion-buttons>
   </ion-navbar>
 
@@ -30,9 +30,9 @@
         </ion-refresher-content>
       </ion-refresher>
 
-  <ion-card (click)="detail()" *ngFor="let sesi of sesizarile">
+  <ion-card *ngFor="let sesi of sesizarile" (click)="detail(sesi)">
       <ion-card-header>
-         <span *ngFor="let str of sesi.structures">{{str.name}}, </span> <span>{{ sesi.town.name }}, {{sesi.createdAt | date:'medium'}}</span>
+         <span *ngFor="let str of sesi.structures">{{str.name}}, </span> <span style="color:#008DC1;">{{ sesi.town.name }}, {{sesi.createdAt | date:'medium'}}</span>
         </ion-card-header>
     <ion-card-content>
         <img *ngIf="sesi.attachments.length>0" src="{{sesi.attachments[0].image_url}}"/>

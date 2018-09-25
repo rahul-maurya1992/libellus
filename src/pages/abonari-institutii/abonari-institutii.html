@@ -20,40 +20,14 @@
 
 
 <ion-content padding no-border>
+    <form [formGroup]="abonariform">
   <ion-list>
-      <ion-item *ngFor="let items of listItems">
+      <ion-item *ngFor="let items of listItems;let i = index">
           <ion-label>{{items.name}}</ion-label>
-          <ion-checkbox checked="true" (ionChange)="unSubscribeFromInstitution(items.id,index)"></ion-checkbox>
+          <ion-checkbox checked="true" formControlName="alege" (ionChange)="unSubscribeFromInstitution(items.id,i,abonariform)"></ion-checkbox>
         </ion-item>
-        <!-- <ion-item>
-            <ion-label>SC TRANSURB SA</ion-label>
-            <ion-checkbox checked="true"></ion-checkbox>
-          </ion-item>
-          <ion-item>
-              <ion-label>BIBLIOTECA JUDETEANA V.A URECHIA GALATI</ion-label>
-              <ion-checkbox checked="true"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-                <ion-label>CENTRUL CULTURAL DUNAREA DE JOS GALATI</ion-label>
-                <ion-checkbox checked="true"></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                  <ion-label>COMPLEXUL MUZEAL DE STIINTELE NATURII "RASVAN ANGHELUTA"</ion-label>
-                  <ion-checkbox checked="true"></ion-checkbox>
-                </ion-item>
-                <ion-item>
-                    <ion-label>S.C. DRUMURI SI PODURI S.A. GALATI</ion-label>
-                    <ion-checkbox checked="true"></ion-checkbox>
-                  </ion-item>
-                  <ion-item>
-                      <ion-label>SC APA CANAL SA</ion-label>
-                      <ion-checkbox checked="true"></ion-checkbox>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>SC CALORGAL SA</ion-label>
-                        <ion-checkbox checked="true"></ion-checkbox>
-                      </ion-item> -->
   </ion-list>
+  </form>
   <ion-card *ngIf="listItems.length == 0">
       <ion-card-content>
         <!-- Add card content here! -->

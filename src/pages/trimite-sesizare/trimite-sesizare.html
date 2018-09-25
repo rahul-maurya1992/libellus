@@ -41,7 +41,7 @@
       </ion-list>
       <ion-list>
           <ion-label>Imagini selectate</ion-label>
-          <ion-item *ngFor="let img of displayImg;let i = index">
+          <ion-item class="selectedimg" *ngFor="let img of displayImg;let i = index">
               <ion-icon name="close" (click)="removeFile(i)"></ion-icon>
               <img [src]="_DomSanitizationService.bypassSecurityTrustUrl(img)">
             </ion-item>

@@ -37,30 +37,29 @@
 <!-- <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav> -->
 
 
-<!-- *************** Second menu for search ***************-->
+<!-- *************** Second menu for search that uses on sesizarile mele page ***************-->
 <ion-menu [content]="content" side="right" id="menu2">
     <ion-header no-border>
         <ion-toolbar class="menutool" style="color: #008DC1;font-size: 20px;font-weight: 600;">
             <span>Filtre sesizari</span>
         </ion-toolbar>
     </ion-header>
-
     <ion-content style="background:#fff !important;">
         <ion-item>
             <ion-label>Selecteaza Status Filtrare</ion-label>
-            <ion-select [(ngModel)]="filterObject.status" name="status">
+            <ion-select [(ngModel)]="filterObject.status" name="status" class="myclass">
                 <!-- <ion-option value="" disabled selected hidden>Selecteaza Status Filtrare</ion-option> -->
-                <ion-option value="all">Toate</ion-option>
-                <ion-option value="0">Procesare</ion-option>
-                <ion-option value="1">Acceptat</ion-option>
-                <ion-option value="4">Refuzat</ion-option>
+                <ion-option class="filerclasss" value="all">Toate</ion-option>
+                <ion-option class="filerclasss" value="0">Procesare</ion-option>
+                <ion-option class="filerclasss" value="1">Acceptat</ion-option>
+                <ion-option class="filerclasss" value="4">Refuzat</ion-option>
             </ion-select>
         </ion-item>
         <div class="outer_div">
-                <button ion-button menuClose="right" round outline (click)="applyFilters(filterObject)">
+                <button ion-button class="appy" menuClose="right" round outline (click)="applyFilters(filterObject)">
                         Aplica Filtre
                     </button>
-                    <button ion-button menuClose="right" round outline (click)="ResetFilter()">
+                    <button ion-button class="appy" menuClose="right" round outline (click)="ResetFilter()">
                         Reseteaza Filtre
                     </button>
         </div>
@@ -68,6 +67,38 @@
     </ion-content>
 
 </ion-menu>
+
+<!-- *************** Second menu for search that uses on Alegedinlista Page ***************-->
+<ion-menu [content]="content" side="right" id="menu3">
+    <ion-header no-border>
+        <ion-toolbar class="menutool" style="color: #008DC1;font-size: 20px;font-weight: 600;">
+            <span>Filtre Institutii</span>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content style="background:#fff !important;">
+        <ion-item>
+            <ion-label>Selecteaza Structura</ion-label>
+            <ion-select [(ngModel)]="filterObject.structure_id" name="structure_id" class="myclass">
+                <!-- <ion-option value="" disabled selected hidden>Selecteaza Status Filtrare</ion-option> -->
+                <ion-option class="filerclasss" *ngFor="let cat of categorylist" value="{{cat.id}}">{{cat.name}}</ion-option>
+                <!-- <ion-option class="filerclasss" value="0">Procesare</ion-option>
+                <ion-option class="filerclasss" value="1">Acceptat</ion-option>
+                <ion-option class="filerclasss" value="4">Refuzat</ion-option> -->
+            </ion-select>
+        </ion-item>
+        <div class="outer_div">
+                <button ion-button class="appy" menuClose="right" round outline (click)="applyAbonariFilter(filterObject)">
+                        Aplica Filtre
+                    </button>
+                    <button ion-button class="appy" menuClose="right" round outline (click)="ResetAbonariFilter()">
+                        Reseteaza Filtre
+                    </button>
+        </div>
+       
+    </ion-content>
+
+</ion-menu>
+
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

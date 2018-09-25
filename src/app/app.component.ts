@@ -1,9 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events } from 'ionic-angular';
+import { Nav, Platform, Events, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { HomePage } from '../pages/home/home';
 import { AuthenticationPage } from '../pages/authentication/authentication';
 import { ContacteazaNePage } from '../pages/contacteaza-ne/contacteaza-ne';
 import { DespreNoPage } from '../pages/despre-no/despre-no';
@@ -13,6 +11,9 @@ import { ContulmeuPage } from '../pages/contulmeu/contulmeu';
 import { PetitiiPublicePage } from '../pages/petitii-publice/petitii-publice';
 import { AbonariInstitutiiPage } from '../pages/abonari-institutii/abonari-institutii';
 import { SesizarilePage } from '../pages/sesizarile/sesizarile';
+import { ItemsProvider } from '../providers/items/items';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+import { OneSignal } from '@ionic-native/onesignal';
 
 
 @Component({
@@ -24,12 +25,21 @@ export class MyApp {
   activePage: any;
   pages: Array<{ title: string, component: any, icon: any, img: any }>;
   eventsubscriber: any;
-  filterObject:any = {};
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public event: Events) {
-    // this.filterObject.status = "label";
-    this.initializeApp();
-   // alert('component');
+  filterObject: any = {};
+  daysOptions: { cssClass: string; };
+  categorylist: any;
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public event: Events, public itemPro: ItemsProvider,
+    private openNativeSettings: OpenNativeSettings, public alertCtrl: AlertController, private oneSignal: OneSignal) {
+    this.daysOptions = {
+      cssClass: 'my-class',
+    }
     
+    this.initializeApp();
+    this.GetCategorylist();
+    this.handleNotification();
+    // alert('component');
+
+
 
     this.event.subscribe('loggedin', (data) => {
       console.log('here');
@@ -55,7 +65,7 @@ export class MyApp {
       console.log('skip event');
       console.log(data);
       this.rootPage = SesizarePage;// AuthenticationPage;
-      
+
       // used for an example of ngFor and navigation
       this.eventsubscriber = false;
       this.pages = [
@@ -76,14 +86,23 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      if(localStorage.getItem('currentUser')){
+      if (this.platform.is('ios')) {
+        if (localStorage.getItem('firstTime_launch')) {
+          console.log('firsttime');
+        } else {
+          this.presentConfirm();
+          localStorage.setItem('firstTime_launch', 'true');
+        }
+      }
+
+      if (localStorage.getItem('currentUser')) {
         console.log(localStorage.getItem('currentUser'));
         this.event.publish('loggedin', 'loggedin');
-      }else{
+      } else {
         console.log('skip');
         this.event.publish('skip', 'skip');
       }
-      
+
     });
   }
 
@@ -94,19 +113,76 @@ export class MyApp {
     this.activePage = page;
   }
   checkActive(page) {
-
     // console.log(page);
     return page == this.activePage;
   }
   authenticate() {
     this.nav.setRoot(AuthenticationPage);
   }
-  applyFilters(data){
+  applyFilters(data) {
     console.log(data);
-    this.nav.setRoot(SesizarilePage,{statusObj:this.filterObject});
+    this.nav.setRoot(SesizarilePage, { statusObj: this.filterObject });
   }
-  ResetFilter(){
+  ResetFilter() {
     this.filterObject.status = '';
-    this.nav.setRoot(SesizarilePage,{statusObj:''});
+    this.nav.setRoot(SesizarilePage, { statusObj: '' });
+  }
+
+  GetCategorylist() {
+    this.itemPro.getCategory().map(res => res.json()).subscribe(response => {
+      console.log(response);
+      this.categorylist = response.data;
+    })
+  }
+
+  applyAbonariFilter() {
+    console.log(this.filterObject);
+    this.itemPro.getFilteredInstitutions(this.filterObject.structure_id).map(res => res.json()).subscribe(response => {
+      console.log(response);
+    })
+  }
+
+  presentConfirm() {
+    let alert = this.alertCtrl.create({
+      // title: 'Confirm purchase',
+      message: 'Please enable the cookie to use this app by follow the given steps. To enable the cookie just disable the Cross-Site Tracking by following these steps Setting->Safari->Privacy & Security-> Prevent Cross-Site Tracking.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            this.platform.exitApp();
+          }
+        },
+        {
+          text: 'Enable',
+          handler: () => {
+            console.log('enable clicked');
+            this.openNativeSettings.open('privacy');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  handleNotification() {
+    if(this.platform.is('cordova')){
+      this.oneSignal.startInit('3dc6fead-280a-47f1-a6e0-7aec451774e1', '316505521695');
+
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+
+    this.oneSignal.handleNotificationReceived().subscribe(() => {
+      // do something when notification is received
+    });
+
+    this.oneSignal.handleNotificationOpened().subscribe(() => {
+      // do something when a notification is opened
+    });
+
+    this.oneSignal.endInit();
+    }
+    
   }
 }

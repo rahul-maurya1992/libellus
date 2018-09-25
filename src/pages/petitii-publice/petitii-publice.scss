@@ -1,3 +1,44 @@
 page-petitii-publice {
+  .card-header{
+    font-size: 12px !important;
+    font-weight: 600;
+}
+.card-header span{
+    color:#008DC1;
+}
+.card-header h2{
+    margin: 2px 0px 14px !important;
+    font-weight: 600;
+}
+.card-content p{
+    float: right;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 15px;
+    color:grey;
+}
+.card-content span{
+    float: left;
+    padding-top: 8px;
+    padding-bottom: 8px;
 
+    .icon{
+        font-size: 20px;
+        color:#4867AA
+    }
+}
+.toolbar  ion-icon{
+    font-size: 25px;
+    color:#008DC1;
+}
+.card-header p{
+    float: right;
+    color:#008DC1;
+    font-weight: 600;
+}
+.card-header h3{
+    float: left;
+    color:#008DC1;
+    font-weight: 600;
+}
 }

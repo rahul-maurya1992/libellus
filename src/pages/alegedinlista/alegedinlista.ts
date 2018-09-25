@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
 import { ItemsProvider } from '../../providers/items/items';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
@@ -21,9 +21,9 @@ export class AlegedinlistaPage {
   totalPage: any;
   listform: FormGroup;
   lastPage: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public itemPro: ItemsProvider, public formBuilder: FormBuilder) {
-    this.institutions = [{ id: 2, name: 'SC TRANSURB SA' }, { id: 3, name: 'BIBLIOTECA JUDETEANA V.A URECHIA GALATI' }, { id: 4, name: 'CENTRUL CULTURAL DUNAREA DE JOS GALATI' },
-    { id: 5, name: 'COMPLEXUL MUZEAL DE STIINTELE NATURII "RASVAN ANGHELUTA"' }, { id: 6, name: 'S.C. DRUMURI SI PODURI S.A. GALATI' }, { id: 7, name: 'SC APA CANAL SA' }, { id: 8, name: 'SC CALORGAL SA' }]
+  constructor(public menuCtrl: MenuController,public navCtrl: NavController, public navParams: NavParams, public itemPro: ItemsProvider, public formBuilder: FormBuilder) {
+    // this.institutions = [{ id: 2, name: 'SC TRANSURB SA' }, { id: 3, name: 'BIBLIOTECA JUDETEANA V.A URECHIA GALATI' }, { id: 4, name: 'CENTRUL CULTURAL DUNAREA DE JOS GALATI' },
+    // { id: 5, name: 'COMPLEXUL MUZEAL DE STIINTELE NATURII "RASVAN ANGHELUTA"' }, { id: 6, name: 'S.C. DRUMURI SI PODURI S.A. GALATI' }, { id: 7, name: 'SC APA CANAL SA' }, { id: 8, name: 'SC CALORGAL SA' }]
     this.getUnSubscribedData();
   }
   ngOnInit() {
@@ -36,6 +36,7 @@ export class AlegedinlistaPage {
     console.log(this.institutions.length);
   }
 
+  
   getUnSubscribedData() {
     this.itemPro.getUnSubscribedInstitutions(1,15).map(res => res.json()).subscribe(response => {
       console.log(response);
@@ -71,8 +72,11 @@ export class AlegedinlistaPage {
     console.log(listval.value.alege);
     if (listval.value.alege) {
       if (!institutionId) return;
-      this.itemPro.subscribeToInstitution(institutionId,1,15).map(res => res.json()).subscribe(response => {
+      this.itemPro.subscribeToInstitution(institutionId).map(res => res.json()).subscribe(response => {
         console.log(response);
+        this.listform.patchValue({
+          alege:false
+        })
         this.getUnSubscribedData();
       }, error => {
         console.error(error);
@@ -94,5 +98,11 @@ export class AlegedinlistaPage {
       console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 500);
+  }
+  tooglemenu(){
+    console.log('toogle');
+    this.menuCtrl.enable(false, 'menu2');
+    this.menuCtrl.enable(true, 'menu3');
+    this.menuCtrl.toggle('right');
   }
 }

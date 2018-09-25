@@ -14,20 +14,19 @@
   </ion-navbar>
 
 </ion-header>
-
-
 <ion-content padding>
     <div class="profile-image">
-        <img id="profileImage" [src]="currentUser?.gravatarUrl" width="20%" height="auto">
+      <img id="profileImage" src="assets/imgs/cg_user.jpg" width="20%" height="auto">
+        <!-- <img id="profileImage" [src]="currentUser?.gravatarUrl" width="20%" height="auto"> -->
         <h4 id="setariProfil-heading1" style="color:#000000;font-weight:lighter;text-align:center;">{{currentUser?.name}} {{currentUser?.last_name}}</h4>
     </div>
     <form [formGroup]="accountForm" (submit)="submit(accountForm)">
     <ion-list>
         <ion-item>
             <ion-label stacked>E-mail</ion-label>
-            <ion-input type="email" formControlName="email"></ion-input>
+            <ion-input type="email" formControlName="email" readonly></ion-input>
           </ion-item>
-          <ion-icon *ngIf="!isValid('email')" class="errorIcon" name="warning"></ion-icon>
+          
         <ion-item>
           <ion-label stacked>Nume</ion-label>
           <ion-input type="text" formControlName="name"></ion-input>

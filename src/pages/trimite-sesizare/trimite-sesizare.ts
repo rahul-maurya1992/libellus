@@ -40,6 +40,7 @@ export class TrimiteSesizarePage {
     public geolocation: Geolocation, private transfer: FileTransfer, private file: File,
     public formBuilder: FormBuilder, public authenticatePro: AuthenticateProvider,
     private _DomSanitizationService: DomSanitizer, public itemPro: ItemsProvider) {
+     // this.displayImg = ['assets/imgs/img2.jpeg','assets/imgs/img3.jpeg','assets/imgs/img4.jpeg']
     this.loadMap();
   }
 

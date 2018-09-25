@@ -17,6 +17,7 @@ export class AuthenticateProvider {
   constructor(public http: Http,public toastCtrl:ToastController) {
     console.log('Hello AuthenticateProvider Provider');
   }
+  
   /*
     Login with email and password
     Call:authenticate.ts

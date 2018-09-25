@@ -44,58 +44,6 @@
       {{notify.content | slice:0:120}}
     </ion-card-content>
   </ion-card>
-
-  <!-- <ion-card>
-      <ion-list>
-          <ion-item>
-            <ion-avatar item-start>
-              <img src="assets/imgs/profile.jpeg">
-            </ion-avatar>
-            <h2>SC APA CANAL SA</h2>
-            <p>Webnesday, Aug 22, 2016 1:42 AM</p>
-          </ion-item>
-        </ion-list>
-    <ion-card-header>
-      Se Opreste apa
-    </ion-card-header>
-    <ion-card-content>
-      S.C APATERM S.A Galati aduce la cunostinta tututor consumatorilor ca incepand cu data...
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-      <ion-list>
-          <ion-item>
-            <ion-avatar item-start>
-              <img src="assets/imgs/profile.jpeg">
-            </ion-avatar>
-            <h2>SC APA CANAL SA</h2>
-            <p>Webnesday, Aug 22, 2016 1:42 AM</p>
-          </ion-item>
-        </ion-list>
-    <ion-card-header>
-      Se Opreste apa
-    </ion-card-header>
-    <ion-card-content>
-      S.C APATERM S.A Galati aduce la cunostinta tututor consumatorilor ca incepand cu data...
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-      <ion-list>
-          <ion-item>
-            <ion-avatar item-start>
-              <img src="assets/imgs/profile.jpeg">
-            </ion-avatar>
-            <h2>SC APA CANAL SA</h2>
-            <p>Webnesday, Aug 22, 2016 1:42 AM</p>
-          </ion-item>
-        </ion-list>
-    <ion-card-header>
-      Se Opreste apa
-    </ion-card-header>
-    <ion-card-content>
-      S.C APATERM S.A Galati aduce la cunostinta tututor consumatorilor ca incepand cu data...
-    </ion-card-content>
-  </ion-card> -->
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="currentPage <= lastPage && currentPage < totalPage">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>

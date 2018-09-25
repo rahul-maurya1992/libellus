@@ -1,5 +1,5 @@
 <!--
-  Generated template for the SesizarileDetailPage page.
+  Generated template for the PetitionDetailPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <!-- <ion-title>sesizarileDetail</ion-title> -->
+    <ion-title>{{petitionDetail?.title}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>
     </ion-buttons>
@@ -21,35 +21,37 @@
 
 <ion-content>
   <ion-card>
+    <ion-card-header>
+        <ion-label *ngIf='petitionDetail?.status == "0"' class="procesare">Procesare</ion-label>
+        <ion-label *ngIf='petitionDetail?.status == "1"' class="procesare">Acceptat</ion-label>
+        <ion-label *ngIf='petitionDetail?.status == "2"' class="procesare">Refuzat</ion-label>
+    </ion-card-header>
     <ion-card-content>
       <ion-list>
-        <ion-item>
-
-          <ion-label *ngIf='sesizarileDetail?.status == "0"' class="procesare">Procesare</ion-label>
-          <ion-label *ngIf='sesizarileDetail?.status == "1"' class="procesare">Acceptat</ion-label>
-          <ion-label *ngIf='sesizarileDetail?.status == "2"' class="procesare">Refuzat</ion-label>
-        </ion-item>
-        <ion-item>
+      <ion-item>
           <ion-label class="address" style="font-size: 15px !important;">
-            <span *ngFor="let str of sesizarileDetail?.structures">{{str.name}},</span> <span>{{ sesizarileDetail?.town.name }}, {{ sesizarileDetail?.createdAt | date:'medium'}}</span>
+            <span>{{petitionDetail?.address}}</span>
           </ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>
-            <span>{{sesizarileDetail?.body}}</span>
+          <ion-label style="color:grey;" [innerHtml]="petitionDetail?.body">
           </ion-label>
         </ion-item>
         <ion-item>
           <div class="mapouter" #map id="map" style="height:150px;"></div>
+          <button ion-button block icon-end (click)="adaugaComment()">
+              Adauga Comentariu
+              <ion-icon style="color:#fff !important;font-size: 25px !important;" name="exit"></ion-icon>
+            </button>
         </ion-item>
         <ion-item>
-          <img src="{{sesizarileDetail?.attachments[0].image_url}}" />
+          <img src="{{petitionDetail?.attachmentsNew[0].image_url}}" />
         </ion-item>
         <ion-item>
           <ion-label><span class="address">Descarca fisierele atasate</span><ion-icon name="cloud-download"></ion-icon>
           </ion-label>
         </ion-item>
-        <ion-item *ngFor="let attachment of sesizarileDetail?.attachments">
+        <ion-item *ngFor="let attachment of petitionDetail?.attachmentsNew">
           <ion-label (click)="Inappbrowser(attachment.image_url)"><span class="address">{{attachment.original_filename}}</span></ion-label>
         </ion-item>
         <!-- <ion-item>

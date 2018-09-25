@@ -23,7 +23,7 @@ export class ItemsProvider {
   }
 
   getComplaint(page, perPage, sort) {
-    return this.http.get('https://libellus.ro/serve/api/v1/petition/fetchOwnPetitions?page=' + page + '&perPage=' + perPage + '&sort=createdAt ' + sort, { withCredentials: true });
+    return this.http.get('https://libellus.ro/serve/api/v1/petition/fetchOwnPetitions?page=' + page + '&perPage=' + perPage + '&sort=createdAt ' + sort, { withCredentials: true});
   }
 
   /************* Enable/ Disable push notification *****************/
@@ -34,10 +34,7 @@ export class ItemsProvider {
   /************** Update user profile data **************/
   updateUserProfile(data) {
     console.log(data);
-    if (!data.id) {
-      throw new Error('id parameter missing in subscribeToInstitution; institutionsService');
-    }
-    return this.http.put(this.apiUrl + 'user/' + data.id, data, { withCredentials: true });
+    return this.http.put(this.apiUrl + 'user/editSelf', data, { withCredentials: true });
   }
 
   /******* update user profile picture ****************/
@@ -52,16 +49,17 @@ export class ItemsProvider {
   getUnSubscribedInstitutions(page, perPage) {
     return this.http.get(this.apiUrl + 'subscription/unsubscribedAssociations?page=' + page + '&perPage=' + perPage, { withCredentials: true });
   }
+  
 
   /*
   function to get subscribed institution
   Call: alegedinlista.ts
  */
-  subscribeToInstitution(associationId, page, perPage) {
+  subscribeToInstitution(associationId) {
     if (!associationId) {
       throw new Error('id parameter missing in subscribeToInstitution; institutionsService');
     }
-    return this.http.get(this.apiUrl + 'subscription/subscribeToInstitution?page=' + page + '&perPage=' + perPage + '&association=' + associationId, { withCredentials: true });
+    return this.http.get(this.apiUrl + 'subscription/subscribeToInstitution?association=' + associationId, { withCredentials: true });
   }
 
   /*
@@ -69,6 +67,14 @@ export class ItemsProvider {
   Call:abonari-institutii.ts
   */
   getSubscribedInstitutions(page, perPage) {
+    console.log('data==========='+page,perPage);
+
+    // return fetch(this.apiUrl + 'subscription/subscribedAssociations?page=' + page + '&perPage=' + perPage, {
+    //   method: 'GET',
+    //   credentials: 'include',
+    // }).then(response => response.json()).catch(function (err) {
+    //   console.log(err);
+    // });
     return this.http.get(this.apiUrl + 'subscription/subscribedAssociations?page=' + page + '&perPage=' + perPage, { withCredentials: true });
   }
 
@@ -76,12 +82,57 @@ export class ItemsProvider {
    Function to unsubscribe the list 
    Call:abonari-institutii.ts
    */
-  unsubscribeFromInstitution(institutionId, page, perPage) {
-    if (!institutionId) {
+  unsubscribeFromInstitution(associationId) {
+    if (!associationId) {
       throw new Error('id parameter missing in subscribeToInstitution');
     }
-    return this.http.get(this.apiUrl + 'subscription/unsubscribeToInstitution?page=' + page + '&perPage=' + perPage, { withCredentials: true })
+    return this.http.get(this.apiUrl + 'subscription/unsubscribeToInstitution?association=' + associationId, { withCredentials: true })
   }
+  /*
+   Function to get all category list
+   Call: app.component.ts
+   */
+  getCategory(){
+    return this.http.get(this.apiUrl+'structure?limit=10000',{ withCredentials: true });
+  }
+
+/*
+Function to Filter the Unsubscribed institutii
+Call: app.component.ts
+*/
+getFilteredInstitutions(structureId){
+  console.log('hit it');
+  //return this.http.get(this.apiUrl+'association',{params: {structure_id: structureId}});
+return this.http.get(this.apiUrl+'association',{params: {structure_id: structureId}});
+}
+
+/*
+Function to get public petitions
+Call:petitii-publice.ts
+*/
+
+GetPublicPetitions(page,perPage){
+  return this.http.get(this.apiUrl+'official_petition?page='+page+'&perPage='+perPage+'&populate=association,attachments&sort=createdAt DESC&where={}', { withCredentials: true});
+}
+
+/*
+Function to get petition attachments
+Call: peitii-publice.ts
+*/
+
+GetAttachments(attachmentIds){
+console.log(attachmentIds);
+var postdata = {"id":attachmentIds}
+return this.http.get(this.apiUrl+'petition_attachment?where={"id":['+attachmentIds+']}');
+}
+
+/*
+function for post comment
+Call: adauga-commentariu.ts
+*/
+postComment(postdata){
+  return this.http.post(this.apiUrl+'comments',postdata, { withCredentials: true});
+}
 
   /* Common toast message function */
   presentToast(msg, duration, position) {

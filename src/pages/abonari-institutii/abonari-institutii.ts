@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlegedinlistaPage } from '../alegedinlista/alegedinlista';
 import { ItemsProvider } from '../../providers/items/items';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 
 /**
  * Generated class for the AbonariInstitutiiPage page.
@@ -15,27 +17,45 @@ import { ItemsProvider } from '../../providers/items/items';
   selector: 'page-abonari-institutii',
   templateUrl: 'abonari-institutii.html',
 })
+
 export class AbonariInstitutiiPage {
   listItems: any = [];
   currentPage:any;
   totalPage:any;
   lastPage: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public itemPro:ItemsProvider) {
+  abonariform: FormGroup;
+  constructor(public navCtrl: NavController, public navParams: NavParams,public itemPro:ItemsProvider,public formBuilder:FormBuilder,private openNativeSettings: OpenNativeSettings) {
+    console.log(navigator.cookieEnabled);
+    // if(navigator.cookieEnabled){
+    //   alert('')
+    // }else{
+    //   this.openNativeSettings.open('privacy');
+    // }
+
 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AbonariInstitutiiPage');
-    this.listItems = [{ 'name': 'Primaria Mun Galati' },
-    { 'name': 'SC TRANSURB SA' }, { 'name': 'BIBLIOTECA JUDETEANA V.A URECHIA GALATI' }, { 'name': 'CENTRUL CULTURAL DUNAREA DE JOS GALATI' },
-    { 'name': 'COMPLEXUL MUZEAL DE STIINTELE NATURII "RASVAN ANGHELUTA"' }, { 'name': 'S.C. DRUMURI SI PODURI S.A. GALATI' }, { 'name': 'SC APA CANAL SA' },
-    { 'name': 'SC CALORGAL SA' }];
+    // this.listItems = [{id:1,'name': 'Primaria Mun Galati' },
+    // {id:2, 'name': 'SC TRANSURB SA' }, {id:3, 'name': 'BIBLIOTECA JUDETEANA V.A URECHIA GALATI' }, { id:4,'name': 'CENTRUL CULTURAL DUNAREA DE JOS GALATI' },
+    // { id:5,'name': 'COMPLEXUL MUZEAL DE STIINTELE NATURII "RASVAN ANGHELUTA"' }, {id:6, 'name': 'S.C. DRUMURI SI PODURI S.A. GALATI' }, {id:7, 'name': 'SC APA CANAL SA' },
+    // {id:8, 'name': 'SC CALORGAL SA' }];
+    this.GetSUbscribedList();
+  }
+
+  ngOnInit() {
+    this.abonariform = this.formBuilder.group({
+      alege: [true]
+    })
   }
 
   GetSUbscribedList() {
     this.itemPro.getSubscribedInstitutions(1,15).map(res=>res.json()).subscribe(response=>{
+
       console.log(response);
       this.currentPage = 1;
+      
       this.totalPage = response.total;
       this.lastPage = response.last_page;
       this.listItems = [];
@@ -50,6 +70,7 @@ export class AbonariInstitutiiPage {
   LoadMoreData(pageno){
     this.itemPro.getSubscribedInstitutions(pageno,15).map(res=>res.json()).subscribe(response=>{
       console.log(response);
+      
       response.data.forEach(value => {
         this.listItems.push(value);
       });
@@ -59,11 +80,24 @@ export class AbonariInstitutiiPage {
     })
   }
 
+
   /******** Run function on unchecked ********/
-  unSubscribeFromInstitution(institutionId){
-    if ( !institutionId ) return;
-    
-    
+  unSubscribeFromInstitution(institutionId,index,formdata){
+    console.log(institutionId);
+    console.log(index);
+    console.log(formdata.value);
+    if(formdata.value.alege == false){
+      if ( !institutionId ) return;
+      this.itemPro.unsubscribeFromInstitution(institutionId).map(res=>res.json()).subscribe(response=>{
+        console.log(response);
+        this.abonariform.patchValue({alege:true})
+        this.GetSUbscribedList();
+      },error=>{
+        console.error(error);
+        this.itemPro.presentToast('Nu am putut sa te inscriu la institutia aleasa. Te rog incearca mai tarziu !',4500,'bottom');
+      })
+    }
+  
   }
 
   doInfinite(infiniteScroll) {

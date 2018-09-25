@@ -32,7 +32,6 @@ import { AuthenticateProvider } from '../providers/authenticate/authenticate';
 import { HttpModule} from '@angular/http';
 import { NewsProvider } from '../providers/news/news';
 import { Geolocation } from '@ionic-native/geolocation';
-import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { CategorymodalPage } from '../pages/categorymodal/categorymodal';
 import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
@@ -40,10 +39,15 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file';
 import { Base64 } from '@ionic-native/base64';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { CookieService } from 'ngx-cookie-service';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { SearchPipe } from '../pipes/search/search';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+import { PhotoLibrary } from '@ionic-native/photo-library';
+import { OneSignal } from '@ionic-native/onesignal';
+import { PetitionDetailPage } from '../pages/petition-detail/petition-detail';
+import { AdaugaComentariuPage } from '../pages/adauga-comentariu/adauga-comentariu';
+import { SocialSharing } from '@ionic-native/social-sharing';
 @NgModule({
   declarations: [
     MyApp,
@@ -68,7 +72,9 @@ import { SearchPipe } from '../pipes/search/search';
     PhotographyModalPage,
     NoutatidetailPage,
     CategorymodalPage,
-    SearchPipe
+    SearchPipe,
+    PetitionDetailPage,
+    AdaugaComentariuPage
   ],
   imports: [
     BrowserModule,
@@ -99,7 +105,9 @@ import { SearchPipe } from '../pipes/search/search';
     TrimiteSesizarePage,
     PhotographyModalPage,
     NoutatidetailPage,
-    CategorymodalPage
+    CategorymodalPage,
+    PetitionDetailPage,
+    AdaugaComentariuPage
   ],
   providers: [
     StatusBar,
@@ -109,14 +117,17 @@ import { SearchPipe } from '../pipes/search/search';
     AuthenticateProvider,
     NewsProvider,
     Geolocation,
-    NativeGeocoder,
     Camera,
     ImagePicker,
     WebView,
     File,
     Base64,
-    CookieService,
-    FileTransfer
+    FileTransfer,
+    InAppBrowser,
+    OpenNativeSettings,
+    PhotoLibrary,
+    OneSignal,
+    SocialSharing
     
     
   ]

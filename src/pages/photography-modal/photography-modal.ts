@@ -27,7 +27,7 @@ export class PhotographyModalPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PhotographyModalPage');
-    alert('photography jsk');
+   // alert('photography jsk');
     //this.filesPicked = ['assets/imgs/home-banner.png','assets/imgs/icon.png']
     // console.log(this.navParams.get('displayImg'));
     // console.log(this.navParams.get('files'));
